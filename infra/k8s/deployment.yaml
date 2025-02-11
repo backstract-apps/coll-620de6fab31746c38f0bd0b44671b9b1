@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coll-620de6fab31746c38f0bd0b44671b9b1-depl
+  labels:
+    app: coll-620de6fab31746c38f0bd0b44671b9b1
+    release: prometheus  # Added label for PodMonitor discovery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coll-620de6fab31746c38f0bd0b44671b9b1
+      release: prometheus  # Added label for PodMonitor discovery
+  template:
+    metadata:
+      labels:
+        app: coll-620de6fab31746c38f0bd0b44671b9b1
+        release: prometheus  # Added label for PodMonitor discovery
+    spec:
+      containers:
+        - name: coll-620de6fab31746c38f0bd0b44671b9b1
+          image: 216084506783.dkr.ecr.ap-south-1.amazonaws.com/backstract_apps:coll-620de6fab31746c38f0bd0b44671b9b1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7070
+              name: http  # Optional for HTTP traffic
+            - containerPort: 7070 #same as the deployed code
+              name: metrics  # Added port for metrics scraping
